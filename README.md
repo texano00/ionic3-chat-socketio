@@ -1,8 +1,12 @@
 # A simple Ionic3 chat using Socket.io
 
-<p><img height="120px" src="https://ionicacademy.com/wp-content/uploads/2017/06/ionic-logo-portrait.png">
+<p>
+  <img height="120px" src="https://ionicacademy.com/wp-content/uploads/2017/06/ionic-logo-portrait.png">
   <img height="120px" src="https://cdn-images-1.medium.com/max/1600/1*tOitxCwTNcS3ESstLylmtg.png">
 </p>
+
+## Demo
+<img src="https://media.giphy.com/media/3Z1p5ryTkWrX4EGrdo/giphy.gif">
 
 ## Start server
 * `index.js`
