@@ -11,6 +11,7 @@ import { Observable } from 'rxjs/Observable';
 export class ChatRoomPage {
   messages = [];
   message = '';
+  nickname = '';
 
   constructor(
     private socket: Socket,
@@ -18,6 +19,11 @@ export class ChatRoomPage {
     private alertCtrl: AlertController
   ) {
     this.presentPrompt().then((nickname: string) => {
+      this.nickname = nickname;
+
+      this.socket.connect();
+      this.socket.emit('set-nickname', this.nickname);
+
       this.getMessages().subscribe(message => {
         this.messages.push(message);
       });
@@ -92,8 +98,8 @@ export class ChatRoomPage {
           },
           {
             text: 'Go on',
-            handler: (data: string) => {
-              resolve(data);
+            handler: data => {
+              resolve(data.nickname);
             }
           }
         ]
