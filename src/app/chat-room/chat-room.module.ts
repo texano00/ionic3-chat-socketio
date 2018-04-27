@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ChatRoomPage } from './chat-room';
-import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
-const config: SocketIoConfig = { url: 'http://localhost:3001', options: {} };
+import { SocketIoModule } from 'ng-socket-io';
+import { configSocketIO } from '../config/config.socketio';
 
 @NgModule({
   declarations: [ChatRoomPage],
   imports: [
     IonicPageModule.forChild(ChatRoomPage),
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(configSocketIO)
   ]
 })
 export class ChatRoomPageModule {}

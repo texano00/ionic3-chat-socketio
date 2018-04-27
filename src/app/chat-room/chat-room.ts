@@ -1,7 +1,13 @@
-import { Component } from '@angular/core';
-import { IonicPage, ToastController, AlertController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import {
+  IonicPage,
+  ToastController,
+  AlertController,
+  Content
+} from 'ionic-angular';
 import { Socket } from 'ng-socket-io';
 import { Observable } from 'rxjs/Observable';
+import { FormControl, FormBuilder } from '@angular/forms';
 
 @IonicPage()
 @Component({
@@ -9,15 +15,24 @@ import { Observable } from 'rxjs/Observable';
   templateUrl: 'chat-room.html'
 })
 export class ChatRoomPage {
+  @ViewChild(Content) content: Content;
   messages = [];
-  message = '';
   nickname = '';
+
+  messageForm: any;
+  chatBox: any;
 
   constructor(
     private socket: Socket,
     private toastCtrl: ToastController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    public formBuilder: FormBuilder
   ) {
+    this.messageForm = formBuilder.group({
+      message: new FormControl('')
+    });
+    this.chatBox = '';
+
     this.presentPrompt().then((nickname: string) => {
       this.nickname = nickname;
 
@@ -26,6 +41,7 @@ export class ChatRoomPage {
 
       this.getMessages().subscribe(message => {
         this.messages.push(message);
+        this.scrollToBottom();
       });
 
       this.getUsers().subscribe(data => {
@@ -39,9 +55,11 @@ export class ChatRoomPage {
     });
   }
 
-  public sendMessage(): void {
-    this.socket.emit('add-message', { text: this.message });
-    this.message = '';
+  public sendMessage(message: string): void {
+    if (!message || message === '') return;
+
+    this.socket.emit('add-message', { text: message });
+    this.chatBox = '';
   }
 
   getMessages(): Observable<{}> {
@@ -89,7 +107,7 @@ export class ChatRoomPage {
             text: 'Random',
             role: 'cancel',
             handler: data => {
-              resolve('random_' + Math.random() * 10);
+              resolve('random_' + Math.round(Math.random() * 100));
             }
           },
           {
@@ -102,5 +120,11 @@ export class ChatRoomPage {
       });
       alert.present();
     });
+  }
+
+  scrollToBottom() {
+    setTimeout(() => {
+      this.content.scrollToBottom();
+    }, 100);
   }
 }

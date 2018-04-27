@@ -7,41 +7,35 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid>
-    <ion-row *ngFor="let message of messages">
+  <div *ngFor="let message of messages" class="message-wrapper">
+    <div>
+      <img class="profile-pic" [ngClass]="{'left':nickname !== message.from, 'right':nickname === message.from}" src="https://api.adorable.io/avatars/50/{{message.from}}"
+      />
+      <!--  wave-->
+      <div class="chat-bubble" [ngClass]="{'left':nickname !== message.from, 'right':nickname === message.from, 'slide-left': nickname !== message.from, 'slide-right':nickname === message.from}">
 
-      <ion-col col-9 *ngIf="message.from !== nickname" class="message" [ngClass]="{'my_message': message.from === nickname, 'other_message': message.from !== nickname}">
-        <span class="user_name">{{ message.from }}:</span>
-        <br>
-        <span>{{ message.text }}</span>
-        <div class="time">{{message.created | date:'dd.MM hh:MM'}}</div>
-      </ion-col>
+        <div class="message" [innerHTML]="message.text" autolinker>
+        </div>
 
-      <ion-col offset-3 col-9 *ngIf="message.from === nickname" class="message" [ngClass]="{'my_message': message.from === nickname, 'other_message': message.from !== nickname}">
-        <span class="user_name">{{ message.from }}:</span>
-        <br>
-        <span>{{ message.text }}</span>
-        <div class="time">{{message.created | date:'dd.MM hh:MM'}}</div>
-      </ion-col>
+        <div class="message-detail">
+          <span class="bold">{{message.from}}</span>,
+          <span>{{message.created | date:'dd/MM hh:MM'}}</span>
+        </div>
 
-    </ion-row>
-  </ion-grid>
+      </div>
+    </div>
 
+    <div class="cf"></div>
+  </div>
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar>
-    <ion-row class="message_row">
-      <ion-col col-9>
-        <ion-item no-lines>
-          <ion-input type="text" placeholder="Message" [(ngModel)]="message"></ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col col-3>
-        <button ion-button clear color="primary" (click)="sendMessage()" [disabled]="message === ''">
-          Send
-        </button>
-      </ion-col>
-    </ion-row>
-  </ion-toolbar>
+  <form [formGroup]="messageForm" (submit)="sendMessage(chatBox)" novalidate>
+    <ion-item>
+      <ion-input formControlName="message" [(ngModel)]="chatBox" placeholder="Send a message..."></ion-input>
+      <button ion-button clear (click)="sendMessage(chatBox)" item-end>
+        <ion-icon class="footer-btn" name="send"></ion-icon>
+      </button>
+    </ion-item>
+  </form>
 </ion-footer>
