@@ -8,6 +8,11 @@
 ## Demo
 <img src="https://media.giphy.com/media/Y4qvAWwJPxN87YsKC4/giphy.gif">
 
+## Supported Platforms
+* Android
+* Browser
+* iOS
+
 ## Start server
 * `index.js`
 ``` 
