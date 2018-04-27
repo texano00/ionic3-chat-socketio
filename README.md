@@ -48,4 +48,6 @@ http.listen(port, function(){
 * `npm i`
 * `ionic serve`
 
-
+## Curiosities
+<img src="https://api.adorable.io/avatars/100/cazzo.png"> 
+Avatars are from http://avatars.adorable.io
