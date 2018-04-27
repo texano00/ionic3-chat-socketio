@@ -39,12 +39,12 @@ export class ChatRoomPage {
     });
   }
 
-  public sendMessage() {
+  public sendMessage(): void {
     this.socket.emit('add-message', { text: this.message });
     this.message = '';
   }
 
-  getMessages() {
+  getMessages(): Observable<{}> {
     let observable = new Observable(observer => {
       this.socket.on('message', data => {
         observer.next(data);
@@ -53,7 +53,7 @@ export class ChatRoomPage {
     return observable;
   }
 
-  getUsers() {
+  getUsers(): Observable<{}> {
     let observable = new Observable(observer => {
       this.socket.on('users-changed', data => {
         observer.next(data);
@@ -62,20 +62,16 @@ export class ChatRoomPage {
     return observable;
   }
 
-  ionViewWillLeave() {
+  ionViewWillLeave(): void {
     this.socket.disconnect();
   }
 
-  showToast(msg) {
+  showToast(msg: string): void {
     let toast = this.toastCtrl.create({
       message: msg,
       duration: 2000
     });
     toast.present();
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ChatRoomPage');
   }
 
   presentPrompt(): Promise<string> {
