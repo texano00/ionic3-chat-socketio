@@ -6,7 +6,7 @@
 </p>
 
 ## Demo
-<img src="https://media.giphy.com/media/3Z1p5ryTkWrX4EGrdo/giphy.gif">
+<img src="https://media.giphy.com/media/Y4qvAWwJPxN87YsKC4/giphy.gif">
 
 ## Start server
 * `index.js`
